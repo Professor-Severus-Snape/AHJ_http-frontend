@@ -11,6 +11,11 @@ export default async function createRequest(options) {
   });
 
   if (response.ok) {
+    // FIXME: костыль для удаления тикетов (иначе метод .json() роняет код):
+    if (response.status === 204) {
+      return '';
+    }
+
     const data = await response.json(); // сразу присылает данные обратно!
     return data;
   }

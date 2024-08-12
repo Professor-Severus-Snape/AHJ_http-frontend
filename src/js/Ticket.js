@@ -1,7 +1,10 @@
 export default class Ticket {
-  constructor(name, created, status, description = '') {
+  constructor(id = null, name, created, status, description = '') {
     this.ticket = document.createElement('li');
     this.ticket.classList.add('tickets__item', 'ticket');
+    if (id) {
+      this.ticket.dataset.id = id;
+    }
 
     this.content = document.createElement('div');
     this.content.classList.add('ticket__content');
@@ -30,7 +33,7 @@ export default class Ticket {
     this.content.append(this.btnStatus, this.name, this.created, this.btnUpdate, this.btnDelete);
 
     this.description = document.createElement('p');
-    this.description.classList.add('ticket__full-description');
+    this.description.classList.add('ticket__full-description', 'hidden');
     this.description.textContent = description;
 
     this.ticket.append(this.content, this.description);
