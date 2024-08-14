@@ -1,16 +1,20 @@
 export default class Form {
   constructor() {
+    this.modal = document.createElement('div');
+    this.modal.classList.add('modal');
+
     this.form = document.createElement('form');
     this.form.classList.add('form');
-    document.body.append(this.form);
+
+    this.modal.append(this.form);
+    document.body.append(this.modal);
   }
 
-  createTicket(name = '', description = '') {
+  createTicketForm(name = '', description = '') {
     this.renderTitle('Добавить тикет');
     this.renderShortFieldset(name);
     this.renderFullFieldset(description);
     this.renderBtnsFieldset();
-    // TODO: как перенести обработчики события формы из app.js ???
   }
 
   changeTicket(name = '', description = '') {
@@ -18,26 +22,22 @@ export default class Form {
     this.renderShortFieldset(name);
     this.renderFullFieldset(description);
     this.renderBtnsFieldset();
-    // TODO: как перенести обработчики события формы из app.js ???
   }
 
   removeTicket() {
     this.renderTitle('Удалить тикет');
     this.renderQuestion();
     this.renderBtnsFieldset();
-    // TODO: как перенести обработчики события формы из app.js ???
   }
 
   getTicketName() {
+    this.shortInput.value = this.shortInput.value.trim();
     return this.shortInput.value;
   }
 
   getTicketDescription() {
+    this.fullTextarea.value = this.fullTextarea.value.trim();
     return this.fullTextarea.value;
-  }
-
-  removeForm() {
-    this.form.remove();
   }
 
   renderTitle(title) {
@@ -116,12 +116,17 @@ export default class Form {
 
     this.form.append(this.btnsFieldset);
 
-    this.onBtnCloseClick = this.onBtnCloseClick.bind(this);
-    this.btnClose.addEventListener('click', this.onBtnCloseClick);
+    this.onFormClose = this.onFormClose.bind(this);
+    this.btnClose.addEventListener('click', this.onFormClose);
   }
 
-  onBtnCloseClick() {
-    this.btnClose.removeEventListener('click', this.onBtnCloseClick);
-    this.removeForm();
+  setEvent(handler) {
+    this.form.addEventListener('submit', handler);
+  }
+
+  onFormClose(handler) {
+    this.btnClose.removeEventListener('click', this.onFormClose);
+    this.form.removeEventListener('submit', handler);
+    this.modal.remove();
   }
 }

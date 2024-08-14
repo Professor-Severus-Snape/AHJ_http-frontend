@@ -1,41 +1,92 @@
 export default class Ticket {
-  constructor(id = null, name, created, status, description = '') {
-    this.ticket = document.createElement('li');
-    this.ticket.classList.add('tickets__item', 'ticket');
-    if (id) {
-      this.ticket.dataset.id = id;
+  constructor(name, created, status = false, description = '', id = null) {
+    this.name = name;
+    this.created = created;
+    this.status = status;
+    this.description = description;
+    this.id = id;
+
+    this.createTicketElement();
+  }
+
+  createTicketElement() {
+    this.ticketElement = document.createElement('li');
+    this.ticketElement.classList.add('tickets__item', 'ticket');
+
+    if (this.id) {
+      this.ticketElement.dataset.id = this.id;
     }
 
-    this.content = document.createElement('div');
-    this.content.classList.add('ticket__content');
+    this.createTicketContent();
+    this.createTicketDescription();
 
-    this.btnStatus = document.createElement('div');
-    this.btnStatus.classList.add('ticket__btn', 'ticket__btn_status');
-    if (status) {
-      this.btnStatus.classList.add('done');
+    this.ticketElement.append(this.ticketContent, this.ticketDescription);
+  }
+
+  createTicketContent() {
+    this.ticketContent = document.createElement('div');
+    this.ticketContent.classList.add('ticket__content');
+
+    this.createTicketStatus();
+    this.createTicketName();
+    this.createTicketCreated();
+    this.createTicketUpdate();
+    this.createTicketDelete();
+  }
+
+  createTicketStatus() {
+    this.ticketStatus = document.createElement('div');
+    this.ticketStatus.classList.add('ticket__btn', 'ticket__btn_status');
+
+    if (this.status) {
+      this.ticketStatus.classList.add('done');
     }
 
-    this.name = document.createElement('p');
-    this.name.classList.add('ticket__short-description');
-    this.name.textContent = name;
+    this.ticketContent.append(this.ticketStatus);
+  }
 
-    this.created = document.createElement('time');
-    this.created.classList.add('ticket__date');
-    this.created.dateTime = created; // TODO: преобразовать timestamp
-    this.created.textContent = created; // TODO: преобразовать timestamp
+  createTicketName() {
+    this.ticketName = document.createElement('p');
+    this.ticketName.classList.add('ticket__short-description');
+    this.ticketName.textContent = this.name;
 
-    this.btnUpdate = document.createElement('div');
-    this.btnUpdate.classList.add('ticket__btn', 'ticket__btn_update');
+    this.ticketContent.append(this.ticketName);
+  }
 
-    this.btnDelete = document.createElement('div');
-    this.btnDelete.classList.add('ticket__btn', 'ticket__btn_delete');
+  createTicketCreated() {
+    this.ticketCreated = document.createElement('time');
+    this.ticketCreated.classList.add('ticket__date');
+    this.ticketCreated.dateTime = this.created; // TODO: преобразовать timestamp
+    this.ticketCreated.textContent = this.created; // TODO: преобразовать timestamp
 
-    this.content.append(this.btnStatus, this.name, this.created, this.btnUpdate, this.btnDelete);
+    this.ticketContent.append(this.ticketCreated);
+  }
 
-    this.description = document.createElement('p');
-    this.description.classList.add('ticket__full-description', 'hidden');
-    this.description.textContent = description;
+  createTicketUpdate() {
+    this.ticketUpdate = document.createElement('div');
+    this.ticketUpdate.classList.add('ticket__btn', 'ticket__btn_update');
 
-    this.ticket.append(this.content, this.description);
+    this.ticketContent.append(this.ticketUpdate);
+  }
+
+  createTicketDelete() {
+    this.ticketDelete = document.createElement('div');
+    this.ticketDelete.classList.add('ticket__btn', 'ticket__btn_delete');
+
+    this.ticketContent.append(this.ticketDelete);
+  }
+
+  createTicketDescription() {
+    this.ticketDescription = document.createElement('p');
+    this.ticketDescription.classList.add('ticket__full-description', 'hidden');
+    this.ticketDescription.textContent = this.description;
+  }
+
+  render(container) {
+    container.append(this.ticketElement);
+  }
+
+  getTicketElement() {
+    return this.ticketElement;
   }
 }
