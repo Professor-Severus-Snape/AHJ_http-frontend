@@ -56,8 +56,23 @@ export default class Ticket {
   createTicketCreated() {
     this.ticketCreated = document.createElement('time');
     this.ticketCreated.classList.add('ticket__date');
-    this.ticketCreated.dateTime = this.created; // TODO: преобразовать timestamp
-    this.ticketCreated.textContent = this.created; // TODO: преобразовать timestamp
+
+    const date = this.created ? new Date(this.created) : Date.now();
+    const dateAttr = date.toLocaleString('ru-Ru', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+    const dateText = date.toLocaleString('ru-Ru', {
+      day: '2-digit',
+      month: '2-digit',
+      year: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    this.ticketCreated.dateTime = dateAttr.split('.').reverse().join('-');
+    this.ticketCreated.textContent = dateText.replace(',', '');
 
     this.ticketContent.append(this.ticketCreated);
   }
