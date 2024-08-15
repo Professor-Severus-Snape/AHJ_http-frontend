@@ -1,3 +1,5 @@
+import './addButton.css';
+
 export default class AddButton {
   constructor() {
     this.addBtn = document.createElement('button');

@@ -1,4 +1,4 @@
-import createRequest from '../libs/createRequest';
+import createRequest from './createRequest';
 
 export default class Service {
   // получение с сервера всех тикетов:

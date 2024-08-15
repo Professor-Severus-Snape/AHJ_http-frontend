@@ -1,3 +1,5 @@
+import './form.css';
+
 export default class Form {
   constructor() {
     this.modal = document.createElement('div');

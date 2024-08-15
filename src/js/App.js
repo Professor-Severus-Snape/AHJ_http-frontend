@@ -1,8 +1,8 @@
-import AddButton from './AddButton';
-import Form from './Form';
-import Service from './Service';
-import Ticket from './Ticket';
-import TicketsContainer from './TicketsContainer';
+import AddButton from '../components/addButton/AddButton';
+import Form from '../components/form/Form';
+import Service from '../libs/Service';
+import Ticket from '../components/ticket/Ticket';
+import TicketsContainer from '../components/ticketContainer/TicketsContainer';
 
 export default class App {
   constructor(container) {
@@ -33,7 +33,10 @@ export default class App {
 
     if (allTickets.error) {
       // eslint-disable-next-line no-console
-      console.error('Ошибка при получении данных от сервера: ', allTickets.status);
+      console.error(
+        'Ошибка при получении данных от сервера: ',
+        allTickets.status,
+      );
       return;
     }
 
@@ -66,15 +69,14 @@ export default class App {
     const name = this.form.getTicketName();
     const description = this.form.getTicketDescription();
 
-    if (!name) { // если имя тикета пустое, ничего не делаем
+    if (!name) {
+      // если имя тикета пустое, ничего не делаем
       return;
     }
 
     const ticketObjInfo = await this.service.createTicket(name, description);
 
-    const {
-      id, created, status,
-    } = ticketObjInfo;
+    const { id, created, status } = ticketObjInfo;
 
     const ticket = new Ticket(name, created, status, description, id); // создание узла-тикета
     ticket.render(this.ticketsContainer); // отрисовка нового узла-тикета в DOM
@@ -104,7 +106,10 @@ export default class App {
       this.onDeleteTicket = this.onDeleteTicket.bind(this, id); // передаем id в качестве аргумента
       this.form.setEvent(this.onDeleteTicket); // вешаем событие 'submit' на форму
     } else if (target.closest('.ticket')) {
-      target.closest('.ticket').querySelector('.ticket__full-description').classList.toggle('hidden');
+      target
+        .closest('.ticket')
+        .querySelector('.ticket__full-description')
+        .classList.toggle('hidden');
     }
   }
 
@@ -116,7 +121,8 @@ export default class App {
     const name = this.form.getTicketName(); // новое имя тикета
     const description = this.form.getTicketDescription(); // новое описание тикета
 
-    if (!name) { // если имя тикета пустое, ничего не делаем
+    if (!name) {
+      // если имя тикета пустое, ничего не делаем
       return;
     }
 
@@ -140,7 +146,9 @@ export default class App {
 
     await this.service.deleteTicketById(id); // удаление тикета на сервере
 
-    const ticketToRemove = this.ticketsContainer.querySelector(`[data-id="${id}"]`);
+    const ticketToRemove = this.ticketsContainer.querySelector(
+      `[data-id="${id}"]`,
+    );
     ticketToRemove.remove(); // удаление узла-тикета из DOM
 
     this.form.onFormClose(this.onDeleteTicket); // удаление обработчиков с формы и формы из DOM

@@ -1,3 +1,5 @@
+import './ticket.css';
+
 export default class Ticket {
   constructor(name, created, status = false, description = '', id = null) {
     this.name = name;
