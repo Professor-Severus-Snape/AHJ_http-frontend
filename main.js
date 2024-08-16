@@ -6308,6 +6308,40 @@ var Service = /*#__PURE__*/function () {
   }]);
 }();
 
+;// CONCATENATED MODULE: ./src/components/serverConnection/ServerConnection.js
+
+
+
+
+
+
+
+
+
+
+function ServerConnection_typeof(o) { "@babel/helpers - typeof"; return ServerConnection_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, ServerConnection_typeof(o); }
+function ServerConnection_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function ServerConnection_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, ServerConnection_toPropertyKey(o.key), o); } }
+function ServerConnection_createClass(e, r, t) { return r && ServerConnection_defineProperties(e.prototype, r), t && ServerConnection_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function ServerConnection_toPropertyKey(t) { var i = ServerConnection_toPrimitive(t, "string"); return "symbol" == ServerConnection_typeof(i) ? i : i + ""; }
+function ServerConnection_toPrimitive(t, r) { if ("object" != ServerConnection_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != ServerConnection_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+var ServerConnection = /*#__PURE__*/function () {
+  function ServerConnection() {
+    ServerConnection_classCallCheck(this, ServerConnection);
+    this.message = document.createElement('div');
+    this.message.classList.add('server-connection');
+    this.message.textContent = 'Сервер "http://localhost:7070" не найден';
+  }
+  return ServerConnection_createClass(ServerConnection, [{
+    key: "render",
+    value: function render(container) {
+      this.container = container;
+      this.container.append(this.message);
+    }
+  }]);
+}();
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.join.js
 var es_array_join = __webpack_require__(8598);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.exec.js
@@ -6494,26 +6528,26 @@ var TicketsContainer = /*#__PURE__*/function () {
 
 ;// CONCATENATED MODULE: ./src/js/App.js
 function App_typeof(o) { "@babel/helpers - typeof"; return App_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, App_typeof(o); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function App_regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ App_regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == App_typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator.return && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(App_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, catch: function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function App_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function App_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { App_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { App_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function App_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
@@ -6521,6 +6555,7 @@ function App_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o
 function App_createClass(e, r, t) { return r && App_defineProperties(e.prototype, r), t && App_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function App_toPropertyKey(t) { var i = App_toPrimitive(t, "string"); return "symbol" == App_typeof(i) ? i : i + ""; }
 function App_toPrimitive(t, r) { if ("object" != App_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != App_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -6540,10 +6575,64 @@ var App = /*#__PURE__*/function () {
   }
   return App_createClass(App, [{
     key: "init",
-    value: function init() {
-      this.render(); // первоначальная отрисовка страницы
-      this.setEvents(); // посадка слушателей на кнопку создания тикета и на контейнер с тикетами
-    }
+    value: function () {
+      var _init = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee() {
+        var foundServer;
+        return App_regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return this.checkServer();
+            case 2:
+              foundServer = _context.sent;
+              if (foundServer) {
+                _context.next = 7;
+                break;
+              }
+              this.serverConnection = new ServerConnection();
+              this.serverConnection.render(this.container);
+              return _context.abrupt("return");
+            case 7:
+              this.render(); // первоначальная отрисовка страницы
+              this.setEvents(); // посадка слушателей на кнопку создания тикета и на контейнер с тикетами
+            case 9:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, this);
+      }));
+      function init() {
+        return _init.apply(this, arguments);
+      }
+      return init;
+    }()
+  }, {
+    key: "checkServer",
+    value: function () {
+      var _checkServer = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee2() {
+        return App_regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return fetch('http://localhost:7070/');
+            case 3:
+              return _context2.abrupt("return", true);
+            case 6:
+              _context2.prev = 6;
+              _context2.t0 = _context2["catch"](0);
+              return _context2.abrupt("return", false);
+            case 9:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 6]]);
+      }));
+      function checkServer() {
+        return _checkServer.apply(this, arguments);
+      }
+      return checkServer;
+    }()
   }, {
     key: "render",
     value: function render() {
@@ -6554,24 +6643,22 @@ var App = /*#__PURE__*/function () {
   }, {
     key: "renderTickets",
     value: function () {
-      var _renderTickets = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee() {
+      var _renderTickets = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee3() {
         var _this = this;
         var allTickets;
-        return App_regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
+        return App_regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
             case 0:
-              _context.next = 2;
+              _context3.next = 2;
               return this.service.getTickets();
             case 2:
-              allTickets = _context.sent;
+              allTickets = _context3.sent;
               if (!allTickets.error) {
-                _context.next = 6;
+                _context3.next = 5;
                 break;
               }
-              // eslint-disable-next-line no-console
-              console.error("\u041E\u0448\u0438\u0431\u043A\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0430: ', ".concat(allTickets.status));
-              return _context.abrupt("return");
-            case 6:
+              return _context3.abrupt("return");
+            case 5:
               allTickets.forEach(function (obj) {
                 var id = obj.id,
                   name = obj.name,
@@ -6581,11 +6668,11 @@ var App = /*#__PURE__*/function () {
                 var ticket = new Ticket(name, created, status, description, id);
                 ticket.render(_this.ticketsContainer);
               });
-            case 7:
+            case 6:
             case "end":
-              return _context.stop();
+              return _context3.stop();
           }
-        }, _callee, this);
+        }, _callee3, this);
       }));
       function renderTickets() {
         return _renderTickets.apply(this, arguments);
@@ -6610,24 +6697,24 @@ var App = /*#__PURE__*/function () {
   }, {
     key: "onAddTicket",
     value: function () {
-      var _onAddTicket = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee2(event) {
+      var _onAddTicket = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee4(event) {
         var name, description, ticketObjInfo, id, created, status, ticket;
-        return App_regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) switch (_context2.prev = _context2.next) {
+        return App_regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
             case 0:
               event.preventDefault(); // событие 'submit' на форме
               name = this.form.getTicketName();
               description = this.form.getTicketDescription();
               if (name) {
-                _context2.next = 5;
+                _context4.next = 5;
                 break;
               }
-              return _context2.abrupt("return");
+              return _context4.abrupt("return");
             case 5:
-              _context2.next = 7;
+              _context4.next = 7;
               return this.service.createTicket(name, description);
             case 7:
-              ticketObjInfo = _context2.sent;
+              ticketObjInfo = _context4.sent;
               id = ticketObjInfo.id, created = ticketObjInfo.created, status = ticketObjInfo.status;
               ticket = new Ticket(name, created, status, description, id); // создание узла-тикета
               ticket.render(this.ticketsContainer); // отрисовка нового узла-тикета в DOM
@@ -6635,9 +6722,9 @@ var App = /*#__PURE__*/function () {
               this.form.onFormClose(); // удаление обработчиков с формы и самой формы из DOM
             case 12:
             case "end":
-              return _context2.stop();
+              return _context4.stop();
           }
-        }, _callee2, this);
+        }, _callee4, this);
       }));
       function onAddTicket(_x) {
         return _onAddTicket.apply(this, arguments);
@@ -6647,47 +6734,47 @@ var App = /*#__PURE__*/function () {
   }, {
     key: "onTicketClick",
     value: function () {
-      var _onTicketClick = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee3(event) {
+      var _onTicketClick = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee5(event) {
         var target, clickedTicketData, status, _clickedTicketData, name, description;
-        return App_regeneratorRuntime().wrap(function _callee3$(_context3) {
-          while (1) switch (_context3.prev = _context3.next) {
+        return App_regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) switch (_context5.prev = _context5.next) {
             case 0:
               target = event.target;
               this.clickedTicket = target.closest('.ticket'); // тикет, на который кликнули
               this.id = this.clickedTicket.dataset.id; // id текущего тикета
               if (!target.classList.contains('ticket__btn_status')) {
-                _context3.next = 13;
+                _context5.next = 13;
                 break;
               }
-              _context3.next = 6;
+              _context5.next = 6;
               return this.service.getTicketById(this.id);
             case 6:
-              clickedTicketData = _context3.sent;
+              clickedTicketData = _context5.sent;
               // данные текущего тикета
               status = clickedTicketData.status; // изначальный статус текущего тикета
-              _context3.next = 10;
+              _context5.next = 10;
               return this.service.updateStatusById(this.id, status);
             case 10:
               // обновление статуса тикета на сервере
               target.classList.toggle('done'); // переключение галочки (класс 'done')
-              _context3.next = 25;
+              _context5.next = 25;
               break;
             case 13:
               if (!target.classList.contains('ticket__btn_update')) {
-                _context3.next = 24;
+                _context5.next = 24;
                 break;
               }
-              _context3.next = 16;
+              _context5.next = 16;
               return this.service.getTicketById(this.id);
             case 16:
-              _clickedTicketData = _context3.sent;
+              _clickedTicketData = _context5.sent;
               // данные текущего тикета
               name = _clickedTicketData.name, description = _clickedTicketData.description; // изначальные имя и описание текущего тикета
               this.form = new Form();
               this.form.changeTicketForm(name, description); // отрисовываем форму редактирования тикета
               this.onUpdateTicket = this.onUpdateTicket.bind(this); // привязываем контекст
               this.form.setSubmitEvent(this.onUpdateTicket); // вешаем 'submit' на форму
-              _context3.next = 25;
+              _context5.next = 25;
               break;
             case 24:
               if (target.classList.contains('ticket__btn_delete')) {
@@ -6700,9 +6787,9 @@ var App = /*#__PURE__*/function () {
               }
             case 25:
             case "end":
-              return _context3.stop();
+              return _context5.stop();
           }
-        }, _callee3, this);
+        }, _callee5, this);
       }));
       function onTicketClick(_x2) {
         return _onTicketClick.apply(this, arguments);
@@ -6712,27 +6799,27 @@ var App = /*#__PURE__*/function () {
   }, {
     key: "onUpdateTicket",
     value: function () {
-      var _onUpdateTicket = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee4(event) {
+      var _onUpdateTicket = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee6(event) {
         var name, description, newTicketData, created, status, newTicket;
-        return App_regeneratorRuntime().wrap(function _callee4$(_context4) {
-          while (1) switch (_context4.prev = _context4.next) {
+        return App_regeneratorRuntime().wrap(function _callee6$(_context6) {
+          while (1) switch (_context6.prev = _context6.next) {
             case 0:
               event.preventDefault(); // событие 'submit' на форме
               name = this.form.getTicketName(); // новое имя тикета
               description = this.form.getTicketDescription(); // новое описание тикета
               if (name) {
-                _context4.next = 5;
+                _context6.next = 5;
                 break;
               }
-              return _context4.abrupt("return");
+              return _context6.abrupt("return");
             case 5:
-              _context4.next = 7;
+              _context6.next = 7;
               return this.service.updateTextById(this.id, name, description);
             case 7:
-              _context4.next = 9;
+              _context6.next = 9;
               return this.service.getTicketById(this.id);
             case 9:
-              newTicketData = _context4.sent;
+              newTicketData = _context6.sent;
               // все данные текущего тикета
               created = newTicketData.created, status = newTicketData.status;
               newTicket = new Ticket(name, created, status, description, this.id); // создание тикета
@@ -6742,9 +6829,9 @@ var App = /*#__PURE__*/function () {
               this.form.onFormClose(); // удаление обработчиков с формы и формы из DOM
             case 15:
             case "end":
-              return _context4.stop();
+              return _context6.stop();
           }
-        }, _callee4, this);
+        }, _callee6, this);
       }));
       function onUpdateTicket(_x3) {
         return _onUpdateTicket.apply(this, arguments);
@@ -6754,12 +6841,12 @@ var App = /*#__PURE__*/function () {
   }, {
     key: "onDeleteTicket",
     value: function () {
-      var _onDeleteTicket = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee5(event) {
-        return App_regeneratorRuntime().wrap(function _callee5$(_context5) {
-          while (1) switch (_context5.prev = _context5.next) {
+      var _onDeleteTicket = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee7(event) {
+        return App_regeneratorRuntime().wrap(function _callee7$(_context7) {
+          while (1) switch (_context7.prev = _context7.next) {
             case 0:
               event.preventDefault(); // событие 'submit' на форме
-              _context5.next = 3;
+              _context7.next = 3;
               return this.service.deleteTicketById(this.id);
             case 3:
               // удаление тикета на сервере
@@ -6768,9 +6855,9 @@ var App = /*#__PURE__*/function () {
               this.form.onFormClose(); // удаление обработчиков с формы и формы из DOM
             case 5:
             case "end":
-              return _context5.stop();
+              return _context7.stop();
           }
-        }, _callee5, this);
+        }, _callee7, this);
       }));
       function onDeleteTicket(_x4) {
         return _onDeleteTicket.apply(this, arguments);
