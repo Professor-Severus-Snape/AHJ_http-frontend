@@ -19,14 +19,14 @@ export default class Form {
     this.renderBtnsFieldset();
   }
 
-  changeTicket(name = '', description = '') {
+  changeTicketForm(name = '', description = '') {
     this.renderTitle('Изменить тикет');
     this.renderShortFieldset(name);
     this.renderFullFieldset(description);
     this.renderBtnsFieldset();
   }
 
-  removeTicket() {
+  removeTicketForm() {
     this.renderTitle('Удалить тикет');
     this.renderQuestion();
     this.renderBtnsFieldset();
@@ -122,13 +122,14 @@ export default class Form {
     this.btnClose.addEventListener('click', this.onFormClose);
   }
 
-  setEvent(handler) {
-    this.form.addEventListener('submit', handler);
+  setSubmitEvent(handler) {
+    this.handler = handler;
+    this.form.addEventListener('submit', this.handler);
   }
 
-  onFormClose(handler) {
+  onFormClose() {
     this.btnClose.removeEventListener('click', this.onFormClose);
-    this.form.removeEventListener('submit', handler);
+    this.form.removeEventListener('submit', this.handler);
     this.modal.remove();
   }
 }

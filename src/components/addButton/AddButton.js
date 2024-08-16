@@ -12,7 +12,8 @@ export default class AddButton {
     container.append(this.addBtn);
   }
 
-  setEvent(handler) {
-    this.addBtn.addEventListener('click', handler);
+  setClickEvent(handler) {
+    this.handler = handler;
+    this.addBtn.addEventListener('click', this.handler);
   }
 }

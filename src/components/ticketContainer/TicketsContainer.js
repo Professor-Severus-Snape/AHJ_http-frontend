@@ -6,7 +6,7 @@ export default class TicketsContainer {
     this.ticketsContainer.addEventListener('mousedown', (event) => event.preventDefault());
   }
 
-  get container() {
+  getTicketsContainerElement() {
     return this.ticketsContainer;
   }
 
@@ -14,7 +14,8 @@ export default class TicketsContainer {
     container.append(this.ticketsContainer);
   }
 
-  setEvent(handler) {
-    this.ticketsContainer.addEventListener('click', handler);
+  setClickEvent(handler) {
+    this.handler = handler;
+    this.ticketsContainer.addEventListener('click', this.handler);
   }
 }

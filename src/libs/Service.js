@@ -12,7 +12,7 @@ export default class Service {
     return data;
   }
 
-  // получение тикета по id:
+  // получение данных тикета по id:
   async getTicketById(id) {
     const options = {
       method: 'GET',

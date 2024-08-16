@@ -14,7 +14,7 @@ export default class App {
     this.addBtn = new AddButton();
     this.service = new Service();
     this.ticketsContainerFactory = new TicketsContainer();
-    this.ticketsContainer = this.ticketsContainerFactory.container;
+    this.ticketsContainer = this.ticketsContainerFactory.getTicketsContainerElement();
   }
 
   init() {
@@ -51,8 +51,8 @@ export default class App {
   }
 
   setEvents() {
-    this.addBtn.setEvent(this.onAddBtnClick.bind(this));
-    this.ticketsContainerFactory.setEvent(this.onTicketClick.bind(this));
+    this.addBtn.setClickEvent(this.onAddBtnClick.bind(this));
+    this.ticketsContainerFactory.setClickEvent(this.onTicketClick.bind(this));
   }
 
   onAddBtnClick() {
@@ -60,7 +60,7 @@ export default class App {
     this.form.createTicketForm(); // отрисовываем форму создания нового тикета
 
     this.onAddTicket = this.onAddTicket.bind(this);
-    this.form.setEvent(this.onAddTicket); // вешаем событие 'submit' на форму
+    this.form.setSubmitEvent(this.onAddTicket); // вешаем событие 'submit' на форму
   }
 
   async onAddTicket(event) {
@@ -81,7 +81,7 @@ export default class App {
     const ticket = new Ticket(name, created, status, description, id); // создание узла-тикета
     ticket.render(this.ticketsContainer); // отрисовка нового узла-тикета в DOM
 
-    this.form.onFormClose(this.onAddTicket); // удаление обработчиков с формы и самой формы из DOM
+    this.form.onFormClose(); // удаление обработчиков с формы и самой формы из DOM
   }
 
   async onTicketClick(event) {
@@ -97,14 +97,14 @@ export default class App {
       const currentTicket = await this.service.getTicketById(id); // все данные текущего тикета
       const { name, description } = currentTicket; // изначальные имя и описание текущего тикета
       this.form = new Form();
-      this.form.changeTicket(name, description); // отрисовываем форму редактирования тикета
+      this.form.changeTicketForm(name, description); // отрисовываем форму редактирования тикета
       this.onUpdateTicket = this.onUpdateTicket.bind(this, id); // передаем id в качестве аргумента
-      this.form.setEvent(this.onUpdateTicket); // вешаем событие 'submit' на форму
+      this.form.setSubmitEvent(this.onUpdateTicket); // вешаем событие 'submit' на форму
     } else if (target.classList.contains('ticket__btn_delete')) {
       this.form = new Form();
-      this.form.removeTicket(); // отрисовываем форму удаления тикета
+      this.form.removeTicketForm(); // отрисовываем форму удаления тикета
       this.onDeleteTicket = this.onDeleteTicket.bind(this, id); // передаем id в качестве аргумента
-      this.form.setEvent(this.onDeleteTicket); // вешаем событие 'submit' на форму
+      this.form.setSubmitEvent(this.onDeleteTicket); // вешаем событие 'submit' на форму
     } else if (target.closest('.ticket')) {
       target
         .closest('.ticket')
@@ -136,13 +136,13 @@ export default class App {
     oldTicket.after(newTicket.getTicketElement()); // добавление нового узла-тикета в DOM
     oldTicket.remove(); // удаление старого узла-тикета из DOM
 
-    this.form.onFormClose(this.onUpdateTicket); // удаление обработчиков с формы и формы из DOM
+    this.form.onFormClose(); // удаление обработчиков с формы и формы из DOM
   }
 
   // FIXME: на 2-ом изменении вызывается method: 'allTickets',
   // страница перезагружается, а id = undefined ...
   async onDeleteTicket(id, event) {
-    event.preventDefault();
+    event.preventDefault(); // событие 'submit' на форме
 
     await this.service.deleteTicketById(id); // удаление тикета на сервере
 
@@ -151,6 +151,6 @@ export default class App {
     );
     ticketToRemove.remove(); // удаление узла-тикета из DOM
 
-    this.form.onFormClose(this.onDeleteTicket); // удаление обработчиков с формы и формы из DOM
+    this.form.onFormClose(); // удаление обработчиков с формы и формы из DOM
   }
 }
