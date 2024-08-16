@@ -33,10 +33,7 @@ export default class App {
 
     if (allTickets.error) {
       // eslint-disable-next-line no-console
-      console.error(
-        'Ошибка при получении данных от сервера: ',
-        allTickets.status,
-      );
+      console.error(`Ошибка сервера: ', ${allTickets.status}`);
       return;
     }
 
@@ -86,70 +83,57 @@ export default class App {
 
   async onTicketClick(event) {
     const { target } = event;
-    const { id } = target.closest('.ticket').dataset; // id текущего тикета
+
+    this.clickedTicket = target.closest('.ticket'); // тикет, на который кликнули
+    this.id = this.clickedTicket.dataset.id; // id текущего тикета
 
     if (target.classList.contains('ticket__btn_status')) {
-      const currentTicket = await this.service.getTicketById(id); // все данные текущего тикета
-      const { status } = currentTicket; // изначальный статус текущего тикета
-      await this.service.updateStatusById(id, status); // обновление статуса тикета на сервере
+      const clickedTicketData = await this.service.getTicketById(this.id); // данные текущего тикета
+      const { status } = clickedTicketData; // изначальный статус текущего тикета
+      await this.service.updateStatusById(this.id, status); // обновление статуса тикета на сервере
       target.classList.toggle('done'); // переключение галочки (класс 'done')
     } else if (target.classList.contains('ticket__btn_update')) {
-      const currentTicket = await this.service.getTicketById(id); // все данные текущего тикета
-      const { name, description } = currentTicket; // изначальные имя и описание текущего тикета
+      const clickedTicketData = await this.service.getTicketById(this.id); // данные текущего тикета
+      const { name, description } = clickedTicketData; // изначальные имя и описание текущего тикета
       this.form = new Form();
       this.form.changeTicketForm(name, description); // отрисовываем форму редактирования тикета
-      this.onUpdateTicket = this.onUpdateTicket.bind(this, id); // передаем id в качестве аргумента
-      this.form.setSubmitEvent(this.onUpdateTicket); // вешаем событие 'submit' на форму
+      this.onUpdateTicket = this.onUpdateTicket.bind(this); // привязываем контекст
+      this.form.setSubmitEvent(this.onUpdateTicket); // вешаем 'submit' на форму
     } else if (target.classList.contains('ticket__btn_delete')) {
       this.form = new Form();
       this.form.removeTicketForm(); // отрисовываем форму удаления тикета
-      this.onDeleteTicket = this.onDeleteTicket.bind(this, id); // передаем id в качестве аргумента
-      this.form.setSubmitEvent(this.onDeleteTicket); // вешаем событие 'submit' на форму
-    } else if (target.closest('.ticket')) {
-      target
-        .closest('.ticket')
-        .querySelector('.ticket__full-description')
-        .classList.toggle('hidden');
+      this.onDeleteTicket = this.onDeleteTicket.bind(this); // привязываем контекст
+      this.form.setSubmitEvent(this.onDeleteTicket); // вешаем 'submit' на форму
+    } else {
+      this.clickedTicket.querySelector('.ticket__full-description').classList.toggle('hidden');
     }
   }
 
-  // FIXME: на 2-ом изменении вызывается method: 'allTickets',
-  // страница перезагружается, а id = undefined ...
-  async onUpdateTicket(id, event) {
+  async onUpdateTicket(event) {
     event.preventDefault(); // событие 'submit' на форме
 
     const name = this.form.getTicketName(); // новое имя тикета
     const description = this.form.getTicketDescription(); // новое описание тикета
 
     if (!name) {
-      // если имя тикета пустое, ничего не делаем
-      return;
+      return; // если имя тикета пустое, ничего не делаем
     }
 
-    await this.service.updateTextById(id, name, description); // обновляем имя и описание на сервере
-
-    const newTicketData = await this.service.getTicketById(id); // { name, created, status, ... }
+    await this.service.updateTextById(this.id, name, description); // меняем текст тикета на сервере
+    const newTicketData = await this.service.getTicketById(this.id); // все данные текущего тикета
     const { created, status } = newTicketData;
-
-    const oldTicket = this.ticketsContainer.querySelector(`[data-id="${id}"]`); // старый тикет
-    const newTicket = new Ticket(name, created, status, description, id); // создание нового тикета
-    oldTicket.after(newTicket.getTicketElement()); // добавление нового узла-тикета в DOM
-    oldTicket.remove(); // удаление старого узла-тикета из DOM
+    const newTicket = new Ticket(name, created, status, description, this.id); // создание тикета
+    this.clickedTicket.after(newTicket.getTicketElement()); // добавление нового узла-тикета в DOM
+    this.clickedTicket.remove(); // удаление старого узла-тикета из DOM
 
     this.form.onFormClose(); // удаление обработчиков с формы и формы из DOM
   }
 
-  // FIXME: на 2-ом изменении вызывается method: 'allTickets',
-  // страница перезагружается, а id = undefined ...
-  async onDeleteTicket(id, event) {
+  async onDeleteTicket(event) {
     event.preventDefault(); // событие 'submit' на форме
 
-    await this.service.deleteTicketById(id); // удаление тикета на сервере
-
-    const ticketToRemove = this.ticketsContainer.querySelector(
-      `[data-id="${id}"]`,
-    );
-    ticketToRemove.remove(); // удаление узла-тикета из DOM
+    await this.service.deleteTicketById(this.id); // удаление тикета на сервере
+    this.clickedTicket.remove(); // удаление узла-тикета из DOM
 
     this.form.onFormClose(); // удаление обработчиков с формы и формы из DOM
   }
