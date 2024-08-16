@@ -1,5 +1,14 @@
 # Домашнее задание к занятию "7. Работа с HTTP" (frontend)
 
+[![Build status](https://ci.appveyor.com/api/projects/status/x7lgvkd305ma3poa?svg=true)](https://ci.appveyor.com/project/Professor-Severus-Snape/ahj-http-frontend)
+
+### Запуск сервера:
+
+```md
+1. npm i
+2. npm start
+```
+
 Правила сдачи задания:
 
 1. В рамках этого ДЗ можно использовать любой менеджер пакетов.
