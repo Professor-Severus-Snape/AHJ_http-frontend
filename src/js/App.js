@@ -1,6 +1,7 @@
 import AddButton from '../components/addButton/AddButton';
 import Form from '../components/form/Form';
 import Service from '../libs/Service';
+import ServerConnection from '../components/serverConnection/ServerConnection';
 import Ticket from '../components/ticket/Ticket';
 import TicketsContainer from '../components/ticketContainer/TicketsContainer';
 
@@ -17,9 +18,26 @@ export default class App {
     this.ticketsContainer = this.ticketsContainerFactory.getTicketsContainerElement();
   }
 
-  init() {
+  async init() {
+    const foundServer = await this.checkServer(); // проверка подключения к серверу
+
+    if (!foundServer) {
+      this.serverConnection = new ServerConnection();
+      this.serverConnection.render(this.container);
+      return;
+    }
+
     this.render(); // первоначальная отрисовка страницы
     this.setEvents(); // посадка слушателей на кнопку создания тикета и на контейнер с тикетами
+  }
+
+  async checkServer() {
+    try {
+      await fetch('http://localhost:7070/');
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   render() {
@@ -32,8 +50,6 @@ export default class App {
     const allTickets = await this.service.getTickets();
 
     if (allTickets.error) {
-      // eslint-disable-next-line no-console
-      console.error(`Ошибка сервера: ', ${allTickets.status}`);
       return;
     }
 
