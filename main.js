@@ -5786,6 +5786,29 @@ handlePrototype(DOMTokenListPrototype, 'DOMTokenList');
 /******/ 		})();
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src;
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) {
+/******/ 					var i = scripts.length - 1;
+/******/ 					while (i > -1 && (!scriptUrl || !/^http(s?):/.test(scriptUrl))) scriptUrl = scripts[i--].src;
+/******/ 				}
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 	})();
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 
@@ -6053,7 +6076,8 @@ function _createRequest() {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          baseUrl = 'http://localhost:7070/?'; // TODO: менять при деплое на Render !!!
+          // const baseUrl = 'http://localhost:7070/?'; // локальный сервер
+          baseUrl = 'https://ahj-http-backend-82lw.onrender.com/?'; // деплой на render.com
           method = options.method, url = options.url, body = options.body;
           _context.prev = 2;
           _context.next = 5;
@@ -6147,10 +6171,10 @@ var Service = /*#__PURE__*/function () {
     Service_classCallCheck(this, Service);
   }
   return Service_createClass(Service, null, [{
-    key: "ping",
+    key: "pingServer",
     value: // проверка подключения к серверу:
     function () {
-      var _ping = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee() {
+      var _pingServer = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee() {
         var options, data;
         return Service_regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
@@ -6170,10 +6194,10 @@ var Service = /*#__PURE__*/function () {
           }
         }, _callee);
       }));
-      function ping() {
-        return _ping.apply(this, arguments);
+      function pingServer() {
+        return _pingServer.apply(this, arguments);
       }
-      return ping;
+      return pingServer;
     }() // получение с сервера всех тикетов:
   }, {
     key: "getTickets",
@@ -6387,13 +6411,55 @@ var ServerConnection = /*#__PURE__*/function () {
     ServerConnection_classCallCheck(this, ServerConnection);
     this.message = document.createElement('div');
     this.message.classList.add('server-connection');
-    this.message.textContent = 'Сервер "http://localhost:7070" не найден';
+    this.message.textContent = 'Сервер не найден :(';
   }
   return ServerConnection_createClass(ServerConnection, [{
     key: "render",
     value: function render(container) {
       this.container = container;
       this.container.append(this.message);
+    }
+  }]);
+}();
+
+;// CONCATENATED MODULE: ./src/img/spinner.svg
+const spinner_namespaceObject = __webpack_require__.p + "img/spinner.svg";
+;// CONCATENATED MODULE: ./src/components/spinner/Spinner.js
+
+
+
+
+
+
+
+
+
+
+function Spinner_typeof(o) { "@babel/helpers - typeof"; return Spinner_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, Spinner_typeof(o); }
+function Spinner_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function Spinner_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, Spinner_toPropertyKey(o.key), o); } }
+function Spinner_createClass(e, r, t) { return r && Spinner_defineProperties(e.prototype, r), t && Spinner_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function Spinner_toPropertyKey(t) { var i = Spinner_toPrimitive(t, "string"); return "symbol" == Spinner_typeof(i) ? i : i + ""; }
+function Spinner_toPrimitive(t, r) { if ("object" != Spinner_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != Spinner_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+var Spinner = /*#__PURE__*/function () {
+  function Spinner() {
+    Spinner_classCallCheck(this, Spinner);
+    this.element = document.createElement('img');
+    this.element.classList = 'spinner';
+    this.element.src = spinner_namespaceObject;
+  }
+  return Spinner_createClass(Spinner, [{
+    key: "render",
+    value: function render(container) {
+      this.container = container;
+      this.container.append(this.element);
+    }
+  }, {
+    key: "removeSpinner",
+    value: function removeSpinner() {
+      this.element.remove();
     }
   }]);
 }();
@@ -6617,6 +6683,7 @@ function App_toPrimitive(t, r) { if ("object" != App_typeof(t) || !t) return t; 
 
 
 
+
 var App = /*#__PURE__*/function () {
   function App(container) {
     App_classCallCheck(this, App);
@@ -6625,6 +6692,7 @@ var App = /*#__PURE__*/function () {
     }
     this.container = container;
     this.addBtn = new AddButton();
+    this.spinner = new Spinner();
     this.ticketsContainerFactory = new TicketsContainer();
     this.ticketsContainer = this.ticketsContainerFactory.getTicketsContainerElement();
   }
@@ -6636,21 +6704,26 @@ var App = /*#__PURE__*/function () {
         return App_regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
-              return Service.ping();
-            case 2:
+              this.spinner.render(this.container); // ожидание первого ответа от сервера...
+              _context.next = 3;
+              return Service.pingServer();
+            case 3:
               server = _context.sent;
+              // проверка подключения к серверу
+              this.spinner.removeSpinner(); // убираем спиннер после получения ответа от сервера
+
+              // NOTE: обработка ошибки подключения к серверу:
               if (!(server.status === 520)) {
-                _context.next = 7;
+                _context.next = 9;
                 break;
               }
               this.serverConnection = new ServerConnection();
               this.serverConnection.render(this.container);
               return _context.abrupt("return");
-            case 7:
+            case 9:
               this.render(); // первоначальная отрисовка страницы
               this.setEvents(); // посадка слушателей на кнопку создания тикета и на контейнер с тикетами
-            case 9:
+            case 11:
             case "end":
               return _context.stop();
           }
