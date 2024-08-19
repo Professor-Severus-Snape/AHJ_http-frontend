@@ -1,5 +1,7 @@
 export default async function createRequest(options) {
-  const baseUrl = 'http://localhost:7070/?'; // TODO: менять при деплое на Render !!!
+  // const baseUrl = 'http://localhost:7070/?'; // локальный сервер
+  const baseUrl = 'https://ahj-http-backend-82lw.onrender.com/?'; // деплой на render.com
+
   const { method, url, body } = options;
 
   try {
@@ -28,7 +30,6 @@ export default async function createRequest(options) {
 
     return { error: true, status: response.status };
   } catch (err) {
-    // console.log(err.name, err.message); // TODO: проверить ошибку на Render!!!
     return { error: true, status: 520 };
   }
 }

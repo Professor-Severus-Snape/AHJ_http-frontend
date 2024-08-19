@@ -2,7 +2,7 @@ import createRequest from './createRequest';
 
 export default class Service {
   // проверка подключения к серверу:
-  static async ping() {
+  static async pingServer() {
     const options = {
       method: 'GET',
       url: '',

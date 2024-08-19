@@ -2,6 +2,7 @@ import AddButton from '../components/addButton/AddButton';
 import Form from '../components/form/Form';
 import Service from '../libs/Service';
 import ServerConnection from '../components/serverConnection/ServerConnection';
+import Spinner from '../components/spinner/Spinner';
 import Ticket from '../components/ticket/Ticket';
 import TicketsContainer from '../components/ticketContainer/TicketsContainer';
 
@@ -13,12 +14,15 @@ export default class App {
 
     this.container = container;
     this.addBtn = new AddButton();
+    this.spinner = new Spinner();
     this.ticketsContainerFactory = new TicketsContainer();
     this.ticketsContainer = this.ticketsContainerFactory.getTicketsContainerElement();
   }
 
   async init() {
-    const server = await Service.ping(); // проверка подключения к серверу
+    this.spinner.render(this.container); // ожидание первого ответа от сервера...
+    const server = await Service.pingServer(); // проверка подключения к серверу
+    this.spinner.removeSpinner(); // убираем спиннер после получения ответа от сервера
 
     // NOTE: обработка ошибки подключения к серверу:
     if (server.status === 520) {
