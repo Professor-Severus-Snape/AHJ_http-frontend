@@ -6049,13 +6049,14 @@ function createRequest(_x) {
 }
 function _createRequest() {
   _createRequest = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(options) {
-    var baseUrl, method, url, body, response, data;
+    var baseUrl, method, url, body, response;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          baseUrl = 'http://localhost:7070/?';
+          baseUrl = 'http://localhost:7070/?'; // TODO: менять при деплое на Render !!!
           method = options.method, url = options.url, body = options.body;
-          _context.next = 4;
+          _context.prev = 2;
+          _context.next = 5;
           return fetch(baseUrl + url, {
             method: method,
             headers: {
@@ -6063,33 +6064,51 @@ function _createRequest() {
             },
             body: JSON.stringify(body) // NB! при GET-запросе получим 'undefined'
           });
-        case 4:
+        case 5:
           response = _context.sent;
           if (!response.ok) {
             _context.next = 12;
             break;
           }
           if (!(response.status === 204)) {
-            _context.next = 8;
+            _context.next = 9;
             break;
           }
-          return _context.abrupt("return", undefined);
-        case 8:
-          _context.next = 10;
+          return _context.abrupt("return", {
+            error: false,
+            status: response.status
+          });
+        case 9:
+          _context.next = 11;
           return response.json();
-        case 10:
-          data = _context.sent;
-          return _context.abrupt("return", data);
+        case 11:
+          return _context.abrupt("return", _context.sent);
         case 12:
+          if (!(url === '' && response.status === 404)) {
+            _context.next = 14;
+            break;
+          }
+          return _context.abrupt("return", {
+            error: false,
+            status: 200
+          });
+        case 14:
           return _context.abrupt("return", {
             error: true,
             status: response.status
           });
-        case 13:
+        case 17:
+          _context.prev = 17;
+          _context.t0 = _context["catch"](2);
+          return _context.abrupt("return", {
+            error: true,
+            status: 520
+          });
+        case 20:
         case "end":
           return _context.stop();
       }
-    }, _callee);
+    }, _callee, null, [[2, 17]]);
   }));
   return _createRequest.apply(this, arguments);
 }
@@ -6127,18 +6146,18 @@ var Service = /*#__PURE__*/function () {
   function Service() {
     Service_classCallCheck(this, Service);
   }
-  return Service_createClass(Service, [{
-    key: "getTickets",
-    value: // получение с сервера всех тикетов:
+  return Service_createClass(Service, null, [{
+    key: "ping",
+    value: // проверка подключения к серверу:
     function () {
-      var _getTickets = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee() {
+      var _ping = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee() {
         var options, data;
         return Service_regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               options = {
                 method: 'GET',
-                url: 'method=allTickets'
+                url: ''
               };
               _context.next = 3;
               return createRequest(options);
@@ -6151,22 +6170,22 @@ var Service = /*#__PURE__*/function () {
           }
         }, _callee);
       }));
-      function getTickets() {
-        return _getTickets.apply(this, arguments);
+      function ping() {
+        return _ping.apply(this, arguments);
       }
-      return getTickets;
-    }() // получение данных тикета по id:
+      return ping;
+    }() // получение с сервера всех тикетов:
   }, {
-    key: "getTicketById",
+    key: "getTickets",
     value: function () {
-      var _getTicketById = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee2(id) {
+      var _getTickets = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee2() {
         var options, data;
         return Service_regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               options = {
                 method: 'GET',
-                url: "method=ticketById&id=".concat(id)
+                url: 'method=allTickets'
               };
               _context2.next = 3;
               return createRequest(options);
@@ -6179,6 +6198,34 @@ var Service = /*#__PURE__*/function () {
           }
         }, _callee2);
       }));
+      function getTickets() {
+        return _getTickets.apply(this, arguments);
+      }
+      return getTickets;
+    }() // получение данных тикета по id:
+  }, {
+    key: "getTicketById",
+    value: function () {
+      var _getTicketById = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee3(id) {
+        var options, data;
+        return Service_regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              options = {
+                method: 'GET',
+                url: "method=ticketById&id=".concat(id)
+              };
+              _context3.next = 3;
+              return createRequest(options);
+            case 3:
+              data = _context3.sent;
+              return _context3.abrupt("return", data);
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3);
+      }));
       function getTicketById(_x) {
         return _getTicketById.apply(this, arguments);
       }
@@ -6187,17 +6234,17 @@ var Service = /*#__PURE__*/function () {
   }, {
     key: "createTicket",
     value: function () {
-      var _createTicket = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee3() {
+      var _createTicket = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee4() {
         var name,
           description,
           options,
           data,
-          _args3 = arguments;
-        return Service_regeneratorRuntime().wrap(function _callee3$(_context3) {
-          while (1) switch (_context3.prev = _context3.next) {
+          _args4 = arguments;
+        return Service_regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
             case 0:
-              name = _args3.length > 0 && _args3[0] !== undefined ? _args3[0] : '';
-              description = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : '';
+              name = _args4.length > 0 && _args4[0] !== undefined ? _args4[0] : '';
+              description = _args4.length > 1 && _args4[1] !== undefined ? _args4[1] : '';
               options = {
                 method: 'POST',
                 url: 'method=createTicket',
@@ -6207,16 +6254,16 @@ var Service = /*#__PURE__*/function () {
                   status: false
                 }
               };
-              _context3.next = 5;
+              _context4.next = 5;
               return createRequest(options);
             case 5:
-              data = _context3.sent;
-              return _context3.abrupt("return", data);
+              data = _context4.sent;
+              return _context4.abrupt("return", data);
             case 7:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
-        }, _callee3);
+        }, _callee4);
       }));
       function createTicket() {
         return _createTicket.apply(this, arguments);
@@ -6226,10 +6273,10 @@ var Service = /*#__PURE__*/function () {
   }, {
     key: "updateStatusById",
     value: function () {
-      var _updateStatusById = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee4(id, status) {
-        var options;
-        return Service_regeneratorRuntime().wrap(function _callee4$(_context4) {
-          while (1) switch (_context4.prev = _context4.next) {
+      var _updateStatusById = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee5(id, status) {
+        var options, data;
+        return Service_regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) switch (_context5.prev = _context5.next) {
             case 0:
               options = {
                 method: 'POST',
@@ -6238,13 +6285,16 @@ var Service = /*#__PURE__*/function () {
                   status: !status
                 }
               };
-              _context4.next = 3;
+              _context5.next = 3;
               return createRequest(options);
             case 3:
+              data = _context5.sent;
+              return _context5.abrupt("return", data);
+            case 5:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
-        }, _callee4);
+        }, _callee5);
       }));
       function updateStatusById(_x2, _x3) {
         return _updateStatusById.apply(this, arguments);
@@ -6254,10 +6304,10 @@ var Service = /*#__PURE__*/function () {
   }, {
     key: "updateTextById",
     value: function () {
-      var _updateTextById = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee5(id, name, description) {
-        var options;
-        return Service_regeneratorRuntime().wrap(function _callee5$(_context5) {
-          while (1) switch (_context5.prev = _context5.next) {
+      var _updateTextById = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee6(id, name, description) {
+        var options, data;
+        return Service_regeneratorRuntime().wrap(function _callee6$(_context6) {
+          while (1) switch (_context6.prev = _context6.next) {
             case 0:
               options = {
                 method: 'POST',
@@ -6267,13 +6317,16 @@ var Service = /*#__PURE__*/function () {
                   description: description
                 }
               };
-              _context5.next = 3;
+              _context6.next = 3;
               return createRequest(options);
             case 3:
+              data = _context6.sent;
+              return _context6.abrupt("return", data);
+            case 5:
             case "end":
-              return _context5.stop();
+              return _context6.stop();
           }
-        }, _callee5);
+        }, _callee6);
       }));
       function updateTextById(_x4, _x5, _x6) {
         return _updateTextById.apply(this, arguments);
@@ -6283,22 +6336,25 @@ var Service = /*#__PURE__*/function () {
   }, {
     key: "deleteTicketById",
     value: function () {
-      var _deleteTicketById = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee6(id) {
-        var options;
-        return Service_regeneratorRuntime().wrap(function _callee6$(_context6) {
-          while (1) switch (_context6.prev = _context6.next) {
+      var _deleteTicketById = Service_asyncToGenerator( /*#__PURE__*/Service_regeneratorRuntime().mark(function _callee7(id) {
+        var options, data;
+        return Service_regeneratorRuntime().wrap(function _callee7$(_context7) {
+          while (1) switch (_context7.prev = _context7.next) {
             case 0:
               options = {
                 method: 'GET',
                 url: "method=deleteById&id=".concat(id)
               };
-              _context6.next = 3;
+              _context7.next = 3;
               return createRequest(options);
             case 3:
+              data = _context7.sent;
+              return _context7.abrupt("return", data);
+            case 5:
             case "end":
-              return _context6.stop();
+              return _context7.stop();
           }
-        }, _callee6);
+        }, _callee7);
       }));
       function deleteTicketById(_x7) {
         return _deleteTicketById.apply(this, arguments);
@@ -6569,7 +6625,6 @@ var App = /*#__PURE__*/function () {
     }
     this.container = container;
     this.addBtn = new AddButton();
-    this.service = new Service();
     this.ticketsContainerFactory = new TicketsContainer();
     this.ticketsContainer = this.ticketsContainerFactory.getTicketsContainerElement();
   }
@@ -6577,15 +6632,15 @@ var App = /*#__PURE__*/function () {
     key: "init",
     value: function () {
       var _init = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee() {
-        var foundServer;
+        var server;
         return App_regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return this.checkServer();
+              return Service.ping();
             case 2:
-              foundServer = _context.sent;
-              if (foundServer) {
+              server = _context.sent;
+              if (!(server.status === 520)) {
                 _context.next = 7;
                 break;
               }
@@ -6607,33 +6662,6 @@ var App = /*#__PURE__*/function () {
       return init;
     }()
   }, {
-    key: "checkServer",
-    value: function () {
-      var _checkServer = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee2() {
-        return App_regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.prev = 0;
-              _context2.next = 3;
-              return fetch('http://localhost:7070/');
-            case 3:
-              return _context2.abrupt("return", true);
-            case 6:
-              _context2.prev = 6;
-              _context2.t0 = _context2["catch"](0);
-              return _context2.abrupt("return", false);
-            case 9:
-            case "end":
-              return _context2.stop();
-          }
-        }, _callee2, null, [[0, 6]]);
-      }));
-      function checkServer() {
-        return _checkServer.apply(this, arguments);
-      }
-      return checkServer;
-    }()
-  }, {
     key: "render",
     value: function render() {
       this.addBtn.render(this.container); // кнопка добавления тикета
@@ -6643,36 +6671,33 @@ var App = /*#__PURE__*/function () {
   }, {
     key: "renderTickets",
     value: function () {
-      var _renderTickets = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee3() {
+      var _renderTickets = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee2() {
         var _this = this;
         var allTickets;
-        return App_regeneratorRuntime().wrap(function _callee3$(_context3) {
-          while (1) switch (_context3.prev = _context3.next) {
+        return App_regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              _context3.next = 2;
-              return this.service.getTickets();
+              _context2.next = 2;
+              return Service.getTickets();
             case 2:
-              allTickets = _context3.sent;
+              allTickets = _context2.sent;
+              // NOTE: обработка ошибки запроса:
               if (!allTickets.error) {
-                _context3.next = 5;
-                break;
+                allTickets.forEach(function (obj) {
+                  var id = obj.id,
+                    name = obj.name,
+                    description = obj.description,
+                    status = obj.status,
+                    created = obj.created;
+                  var ticket = new Ticket(name, created, status, description, id);
+                  ticket.render(_this.ticketsContainer);
+                });
               }
-              return _context3.abrupt("return");
-            case 5:
-              allTickets.forEach(function (obj) {
-                var id = obj.id,
-                  name = obj.name,
-                  description = obj.description,
-                  status = obj.status,
-                  created = obj.created;
-                var ticket = new Ticket(name, created, status, description, id);
-                ticket.render(_this.ticketsContainer);
-              });
-            case 6:
+            case 4:
             case "end":
-              return _context3.stop();
+              return _context2.stop();
           }
-        }, _callee3, this);
+        }, _callee2);
       }));
       function renderTickets() {
         return _renderTickets.apply(this, arguments);
@@ -6697,34 +6722,36 @@ var App = /*#__PURE__*/function () {
   }, {
     key: "onAddTicket",
     value: function () {
-      var _onAddTicket = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee4(event) {
+      var _onAddTicket = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee3(event) {
         var name, description, ticketObjInfo, id, created, status, ticket;
-        return App_regeneratorRuntime().wrap(function _callee4$(_context4) {
-          while (1) switch (_context4.prev = _context4.next) {
+        return App_regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
             case 0:
               event.preventDefault(); // событие 'submit' на форме
               name = this.form.getTicketName();
               description = this.form.getTicketDescription();
               if (name) {
-                _context4.next = 5;
+                _context3.next = 5;
                 break;
               }
-              return _context4.abrupt("return");
+              return _context3.abrupt("return");
             case 5:
-              _context4.next = 7;
-              return this.service.createTicket(name, description);
+              _context3.next = 7;
+              return Service.createTicket(name, description);
             case 7:
-              ticketObjInfo = _context4.sent;
-              id = ticketObjInfo.id, created = ticketObjInfo.created, status = ticketObjInfo.status;
-              ticket = new Ticket(name, created, status, description, id); // создание узла-тикета
-              ticket.render(this.ticketsContainer); // отрисовка нового узла-тикета в DOM
-
+              ticketObjInfo = _context3.sent;
+              // NOTE: обработка ошибки запроса:
+              if (!ticketObjInfo.error) {
+                id = ticketObjInfo.id, created = ticketObjInfo.created, status = ticketObjInfo.status;
+                ticket = new Ticket(name, created, status, description, id); // создание узла-тикета
+                ticket.render(this.ticketsContainer); // отрисовка нового узла-тикета в DOM
+              }
               this.form.onFormClose(); // удаление обработчиков с формы и самой формы из DOM
-            case 12:
+            case 10:
             case "end":
-              return _context4.stop();
+              return _context3.stop();
           }
-        }, _callee4, this);
+        }, _callee3, this);
       }));
       function onAddTicket(_x) {
         return _onAddTicket.apply(this, arguments);
@@ -6734,49 +6761,60 @@ var App = /*#__PURE__*/function () {
   }, {
     key: "onTicketClick",
     value: function () {
-      var _onTicketClick = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee5(event) {
-        var target, clickedTicketData, status, _clickedTicketData, name, description;
-        return App_regeneratorRuntime().wrap(function _callee5$(_context5) {
-          while (1) switch (_context5.prev = _context5.next) {
+      var _onTicketClick = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee4(event) {
+        var target, clickedTicketData, status, data, _clickedTicketData, name, description;
+        return App_regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
             case 0:
               target = event.target;
               this.clickedTicket = target.closest('.ticket'); // тикет, на который кликнули
               this.id = this.clickedTicket.dataset.id; // id текущего тикета
               if (!target.classList.contains('ticket__btn_status')) {
-                _context5.next = 13;
+                _context4.next = 15;
                 break;
               }
-              _context5.next = 6;
-              return this.service.getTicketById(this.id);
+              _context4.next = 6;
+              return Service.getTicketById(this.id);
             case 6:
-              clickedTicketData = _context5.sent;
-              // данные текущего тикета
-              status = clickedTicketData.status; // изначальный статус текущего тикета
-              _context5.next = 10;
-              return this.service.updateStatusById(this.id, status);
-            case 10:
-              // обновление статуса тикета на сервере
-              target.classList.toggle('done'); // переключение галочки (класс 'done')
-              _context5.next = 25;
-              break;
-            case 13:
-              if (!target.classList.contains('ticket__btn_update')) {
-                _context5.next = 24;
+              clickedTicketData = _context4.sent;
+              if (clickedTicketData.error) {
+                _context4.next = 13;
                 break;
               }
-              _context5.next = 16;
-              return this.service.getTicketById(this.id);
-            case 16:
-              _clickedTicketData = _context5.sent;
-              // данные текущего тикета
-              name = _clickedTicketData.name, description = _clickedTicketData.description; // изначальные имя и описание текущего тикета
-              this.form = new Form();
-              this.form.changeTicketForm(name, description); // отрисовываем форму редактирования тикета
-              this.onUpdateTicket = this.onUpdateTicket.bind(this); // привязываем контекст
-              this.form.setSubmitEvent(this.onUpdateTicket); // вешаем 'submit' на форму
-              _context5.next = 25;
+              status = clickedTicketData.status; // изначальный статус текущего тикета
+              _context4.next = 11;
+              return Service.updateStatusById(this.id, status);
+            case 11:
+              data = _context4.sent;
+              // обновление на сервере
+              // NOTE: обработка ошибки запроса:
+              if (!data.error) {
+                target.classList.toggle('done'); // переключение галочки (класс 'done')
+              }
+            case 13:
+              _context4.next = 23;
               break;
-            case 24:
+            case 15:
+              if (!target.classList.contains('ticket__btn_update')) {
+                _context4.next = 22;
+                break;
+              }
+              _context4.next = 18;
+              return Service.getTicketById(this.id);
+            case 18:
+              _clickedTicketData = _context4.sent;
+              // данные текущего тикета
+              // NOTE: обработка ошибки запроса:
+              if (!_clickedTicketData.error) {
+                name = _clickedTicketData.name, description = _clickedTicketData.description; // изначальные имя и описание тикета
+                this.form = new Form();
+                this.form.changeTicketForm(name, description); // отрисовываем форму редактирования тикета
+                this.onUpdateTicket = this.onUpdateTicket.bind(this); // привязываем контекст
+                this.form.setSubmitEvent(this.onUpdateTicket); // вешаем 'submit' на форму
+              }
+              _context4.next = 23;
+              break;
+            case 22:
               if (target.classList.contains('ticket__btn_delete')) {
                 this.form = new Form();
                 this.form.removeTicketForm(); // отрисовываем форму удаления тикета
@@ -6785,11 +6823,11 @@ var App = /*#__PURE__*/function () {
               } else {
                 this.clickedTicket.querySelector('.ticket__full-description').classList.toggle('hidden');
               }
-            case 25:
+            case 23:
             case "end":
-              return _context5.stop();
+              return _context4.stop();
           }
-        }, _callee5, this);
+        }, _callee4, this);
       }));
       function onTicketClick(_x2) {
         return _onTicketClick.apply(this, arguments);
@@ -6799,39 +6837,48 @@ var App = /*#__PURE__*/function () {
   }, {
     key: "onUpdateTicket",
     value: function () {
-      var _onUpdateTicket = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee6(event) {
-        var name, description, newTicketData, created, status, newTicket;
-        return App_regeneratorRuntime().wrap(function _callee6$(_context6) {
-          while (1) switch (_context6.prev = _context6.next) {
+      var _onUpdateTicket = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee5(event) {
+        var name, description, data, newTicketData, created, status, newTicket;
+        return App_regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) switch (_context5.prev = _context5.next) {
             case 0:
               event.preventDefault(); // событие 'submit' на форме
               name = this.form.getTicketName(); // новое имя тикета
               description = this.form.getTicketDescription(); // новое описание тикета
               if (name) {
-                _context6.next = 5;
+                _context5.next = 5;
                 break;
               }
-              return _context6.abrupt("return");
+              return _context5.abrupt("return");
             case 5:
-              _context6.next = 7;
-              return this.service.updateTextById(this.id, name, description);
+              _context5.next = 7;
+              return Service.updateTextById(this.id, name, description);
             case 7:
-              _context6.next = 9;
-              return this.service.getTicketById(this.id);
-            case 9:
-              newTicketData = _context6.sent;
+              data = _context5.sent;
+              if (data.error) {
+                _context5.next = 13;
+                break;
+              }
+              _context5.next = 11;
+              return Service.getTicketById(this.id);
+            case 11:
+              newTicketData = _context5.sent;
               // все данные текущего тикета
-              created = newTicketData.created, status = newTicketData.status;
-              newTicket = new Ticket(name, created, status, description, this.id); // создание тикета
-              this.clickedTicket.after(newTicket.getTicketElement()); // добавление нового узла-тикета в DOM
-              this.clickedTicket.remove(); // удаление старого узла-тикета из DOM
 
+              // NOTE: обработка ошибки запроса:
+              if (!newTicketData.error) {
+                created = newTicketData.created, status = newTicketData.status;
+                newTicket = new Ticket(name, created, status, description, this.id); // создаем тикет
+                this.clickedTicket.after(newTicket.getTicketElement()); // добавляем новый узел-тикет в DOM
+                this.clickedTicket.remove(); // удаление старого узла-тикета из DOM
+              }
+            case 13:
               this.form.onFormClose(); // удаление обработчиков с формы и формы из DOM
-            case 15:
+            case 14:
             case "end":
-              return _context6.stop();
+              return _context5.stop();
           }
-        }, _callee6, this);
+        }, _callee5, this);
       }));
       function onUpdateTicket(_x3) {
         return _onUpdateTicket.apply(this, arguments);
@@ -6841,23 +6888,28 @@ var App = /*#__PURE__*/function () {
   }, {
     key: "onDeleteTicket",
     value: function () {
-      var _onDeleteTicket = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee7(event) {
-        return App_regeneratorRuntime().wrap(function _callee7$(_context7) {
-          while (1) switch (_context7.prev = _context7.next) {
+      var _onDeleteTicket = App_asyncToGenerator( /*#__PURE__*/App_regeneratorRuntime().mark(function _callee6(event) {
+        var data;
+        return App_regeneratorRuntime().wrap(function _callee6$(_context6) {
+          while (1) switch (_context6.prev = _context6.next) {
             case 0:
               event.preventDefault(); // событие 'submit' на форме
-              _context7.next = 3;
-              return this.service.deleteTicketById(this.id);
+              _context6.next = 3;
+              return Service.deleteTicketById(this.id);
             case 3:
+              data = _context6.sent;
               // удаление тикета на сервере
-              this.clickedTicket.remove(); // удаление узла-тикета из DOM
 
+              // NOTE: обработка ошибки запроса:
+              if (!data.error && data.status === 204) {
+                this.clickedTicket.remove(); // удаление узла-тикета из DOM
+              }
               this.form.onFormClose(); // удаление обработчиков с формы и формы из DOM
-            case 5:
+            case 6:
             case "end":
-              return _context7.stop();
+              return _context6.stop();
           }
-        }, _callee7, this);
+        }, _callee6, this);
       }));
       function onDeleteTicket(_x4) {
         return _onDeleteTicket.apply(this, arguments);
