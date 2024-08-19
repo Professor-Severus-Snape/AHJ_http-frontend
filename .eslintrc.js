@@ -5,7 +5,4 @@ module.exports = {
     es2023: true, // стандарт ECMAScript 2023 (ES14)
   },
   extends: 'airbnb-base', // Airbnb JavaScript Style
-  rules: {
-    'class-methods-use-this': 'off',
-  },
 };

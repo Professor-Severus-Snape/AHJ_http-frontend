@@ -1,8 +1,19 @@
 import createRequest from './createRequest';
 
 export default class Service {
+  // проверка подключения к серверу:
+  static async ping() {
+    const options = {
+      method: 'GET',
+      url: '',
+    };
+
+    const data = await createRequest(options);
+    return data; // { error: true, status: 520 } || { error: false, status: 200 }
+  }
+
   // получение с сервера всех тикетов:
-  async getTickets() {
+  static async getTickets() {
     const options = {
       method: 'GET',
       url: 'method=allTickets',
@@ -13,7 +24,7 @@ export default class Service {
   }
 
   // получение данных тикета по id:
-  async getTicketById(id) {
+  static async getTicketById(id) {
     const options = {
       method: 'GET',
       url: `method=ticketById&id=${id}`,
@@ -24,7 +35,7 @@ export default class Service {
   }
 
   // создание тикета на сервере:
-  async createTicket(name = '', description = '') {
+  static async createTicket(name = '', description = '') {
     const options = {
       method: 'POST',
       url: 'method=createTicket',
@@ -40,7 +51,7 @@ export default class Service {
   }
 
   // изменение статуса тикета на сервере:
-  async updateStatusById(id, status) {
+  static async updateStatusById(id, status) {
     const options = {
       method: 'POST',
       url: `method=updateById&id=${id}`,
@@ -49,11 +60,12 @@ export default class Service {
       },
     };
 
-    await createRequest(options); // [{...}, {...}, ...]
+    const data = await createRequest(options); // [{...}, {...}, ...]
+    return data;
   }
 
   // изменение имени и описания тикета на сервере:
-  async updateTextById(id, name, description) {
+  static async updateTextById(id, name, description) {
     const options = {
       method: 'POST',
       url: `method=updateById&id=${id}`,
@@ -63,16 +75,18 @@ export default class Service {
       },
     };
 
-    await createRequest(options); // [{...}, {...}, ...]
+    const data = await createRequest(options); // [{...}, {...}, ...]
+    return data;
   }
 
   // удаление тикета на сервере (ничего не возвращает):
-  async deleteTicketById(id) {
+  static async deleteTicketById(id) {
     const options = {
       method: 'GET',
       url: `method=deleteById&id=${id}`,
     };
 
-    await createRequest(options); // undefined
+    const data = await createRequest(options); // { error: false, status: response.status }
+    return data;
   }
 }
