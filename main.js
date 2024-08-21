@@ -6108,31 +6108,22 @@ function _createRequest() {
         case 11:
           return _context.abrupt("return", _context.sent);
         case 12:
-          if (!(url === '' && response.status === 404)) {
-            _context.next = 14;
-            break;
-          }
-          return _context.abrupt("return", {
-            error: false,
-            status: 200
-          });
-        case 14:
           return _context.abrupt("return", {
             error: true,
             status: response.status
           });
-        case 17:
-          _context.prev = 17;
+        case 15:
+          _context.prev = 15;
           _context.t0 = _context["catch"](2);
           return _context.abrupt("return", {
             error: true,
             status: 520
           });
-        case 20:
+        case 18:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[2, 17]]);
+    }, _callee, null, [[2, 15]]);
   }));
   return _createRequest.apply(this, arguments);
 }
@@ -6181,7 +6172,7 @@ var Service = /*#__PURE__*/function () {
             case 0:
               options = {
                 method: 'GET',
-                url: ''
+                url: 'method=checkServer'
               };
               _context.next = 3;
               return createRequest(options);
@@ -6448,6 +6439,7 @@ var Spinner = /*#__PURE__*/function () {
     Spinner_classCallCheck(this, Spinner);
     this.element = document.createElement('img');
     this.element.classList = 'spinner';
+    this.element.alt = 'preloader';
     this.element.src = spinner_namespaceObject;
   }
   return Spinner_createClass(Spinner, [{
@@ -6712,7 +6704,7 @@ var App = /*#__PURE__*/function () {
               // проверка подключения к серверу
               this.spinner.removeSpinner(); // убираем спиннер после получения ответа от сервера
 
-              // NOTE: обработка ошибки подключения к серверу:
+              // обработка ошибки подключения к серверу:
               if (!(server.status === 520)) {
                 _context.next = 9;
                 break;
@@ -6754,7 +6746,7 @@ var App = /*#__PURE__*/function () {
               return Service.getTickets();
             case 2:
               allTickets = _context2.sent;
-              // NOTE: обработка ошибки запроса:
+              // обработка ошибки запроса:
               if (!allTickets.error) {
                 allTickets.forEach(function (obj) {
                   var id = obj.id,
@@ -6813,7 +6805,7 @@ var App = /*#__PURE__*/function () {
               return Service.createTicket(name, description);
             case 7:
               ticketObjInfo = _context3.sent;
-              // NOTE: обработка ошибки запроса:
+              // обработка ошибки запроса:
               if (!ticketObjInfo.error) {
                 id = ticketObjInfo.id, created = ticketObjInfo.created, status = ticketObjInfo.status;
                 ticket = new Ticket(name, created, status, description, id); // создание узла-тикета
@@ -6860,7 +6852,7 @@ var App = /*#__PURE__*/function () {
             case 11:
               data = _context4.sent;
               // обновление на сервере
-              // NOTE: обработка ошибки запроса:
+              // обработка ошибки запроса:
               if (!data.error) {
                 target.classList.toggle('done'); // переключение галочки (класс 'done')
               }
@@ -6877,7 +6869,7 @@ var App = /*#__PURE__*/function () {
             case 18:
               _clickedTicketData = _context4.sent;
               // данные текущего тикета
-              // NOTE: обработка ошибки запроса:
+              // обработка ошибки запроса:
               if (!_clickedTicketData.error) {
                 name = _clickedTicketData.name, description = _clickedTicketData.description; // изначальные имя и описание тикета
                 this.form = new Form();
@@ -6938,7 +6930,7 @@ var App = /*#__PURE__*/function () {
               newTicketData = _context5.sent;
               // все данные текущего тикета
 
-              // NOTE: обработка ошибки запроса:
+              // обработка ошибки запроса:
               if (!newTicketData.error) {
                 created = newTicketData.created, status = newTicketData.status;
                 newTicket = new Ticket(name, created, status, description, this.id); // создаем тикет
@@ -6973,7 +6965,7 @@ var App = /*#__PURE__*/function () {
               data = _context6.sent;
               // удаление тикета на сервере
 
-              // NOTE: обработка ошибки запроса:
+              // обработка ошибки запроса:
               if (!data.error && data.status === 204) {
                 this.clickedTicket.remove(); // удаление узла-тикета из DOM
               }
