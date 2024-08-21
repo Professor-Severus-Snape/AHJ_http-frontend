@@ -5,11 +5,11 @@ export default class Service {
   static async pingServer() {
     const options = {
       method: 'GET',
-      url: '',
+      url: 'method=checkServer',
     };
 
     const data = await createRequest(options);
-    return data; // { error: true, status: 520 } || { error: false, status: 200 }
+    return data; // { error: false, status: 204 } || { error: true, status: 520 }
   }
 
   // получение с сервера всех тикетов:

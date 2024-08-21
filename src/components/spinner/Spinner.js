@@ -5,6 +5,7 @@ export default class Spinner {
   constructor() {
     this.element = document.createElement('img');
     this.element.classList = 'spinner';
+    this.element.alt = 'preloader';
     this.element.src = spinner;
   }
 

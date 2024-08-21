@@ -14,18 +14,12 @@ export default async function createRequest(options) {
     });
 
     if (response.ok) {
-      // удаление тикетов:
+      // проверка подключения к серверу и удаление тикетов:
       if (response.status === 204) {
         return { error: false, status: response.status };
       }
 
       return await response.json(); // сразу присылает данные обратно!
-    }
-
-    // FIXME: как лучше обработать удачную проверку подключения к серверу - что вернуть???:
-    // FIXME: как избавиться от ошибки 404 в консоли ???
-    if (url === '' && response.status === 404) {
-      return { error: false, status: 200 };
     }
 
     return { error: true, status: response.status };

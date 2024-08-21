@@ -24,7 +24,7 @@ export default class App {
     const server = await Service.pingServer(); // проверка подключения к серверу
     this.spinner.removeSpinner(); // убираем спиннер после получения ответа от сервера
 
-    // NOTE: обработка ошибки подключения к серверу:
+    // обработка ошибки подключения к серверу:
     if (server.status === 520) {
       this.serverConnection = new ServerConnection();
       this.serverConnection.render(this.container);
@@ -44,7 +44,7 @@ export default class App {
   async renderTickets() {
     const allTickets = await Service.getTickets();
 
-    // NOTE: обработка ошибки запроса:
+    // обработка ошибки запроса:
     if (!allTickets.error) {
       allTickets.forEach((obj) => {
         const {
@@ -82,7 +82,7 @@ export default class App {
 
     const ticketObjInfo = await Service.createTicket(name, description);
 
-    // NOTE: обработка ошибки запроса:
+    // обработка ошибки запроса:
     if (!ticketObjInfo.error) {
       const { id, created, status } = ticketObjInfo;
       const ticket = new Ticket(name, created, status, description, id); // создание узла-тикета
@@ -100,18 +100,18 @@ export default class App {
 
     if (target.classList.contains('ticket__btn_status')) {
       const clickedTicketData = await Service.getTicketById(this.id); // данные текущего тикета
-      // NOTE: обработка ошибки запроса:
+      // обработка ошибки запроса:
       if (!clickedTicketData.error) {
         const { status } = clickedTicketData; // изначальный статус текущего тикета
         const data = await Service.updateStatusById(this.id, status); // обновление на сервере
-        // NOTE: обработка ошибки запроса:
+        // обработка ошибки запроса:
         if (!data.error) {
           target.classList.toggle('done'); // переключение галочки (класс 'done')
         }
       }
     } else if (target.classList.contains('ticket__btn_update')) {
       const clickedTicketData = await Service.getTicketById(this.id); // данные текущего тикета
-      // NOTE: обработка ошибки запроса:
+      // обработка ошибки запроса:
       if (!clickedTicketData.error) {
         const { name, description } = clickedTicketData; // изначальные имя и описание тикета
         this.form = new Form();
@@ -141,11 +141,11 @@ export default class App {
 
     const data = await Service.updateTextById(this.id, name, description); // меняем на сервере
 
-    // NOTE: обработка ошибки запроса:
+    // обработка ошибки запроса:
     if (!data.error) {
       const newTicketData = await Service.getTicketById(this.id); // все данные текущего тикета
 
-      // NOTE: обработка ошибки запроса:
+      // обработка ошибки запроса:
       if (!newTicketData.error) {
         const { created, status } = newTicketData;
         const newTicket = new Ticket(name, created, status, description, this.id); // создаем тикет
@@ -162,7 +162,7 @@ export default class App {
 
     const data = await Service.deleteTicketById(this.id); // удаление тикета на сервере
 
-    // NOTE: обработка ошибки запроса:
+    // обработка ошибки запроса:
     if (!data.error && data.status === 204) {
       this.clickedTicket.remove(); // удаление узла-тикета из DOM
     }
